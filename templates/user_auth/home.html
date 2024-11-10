@@ -1,0 +1,28 @@
+
+{% extends 'user_auth/base.html' %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="mb-4">Welcome to Doctor Patient Portal</h1>
+    {% if not user.is_authenticated %}
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">For Patients</h5>
+                        <p class="card-text">Register as a patient to book appointments and manage your medical records.</p>
+                        <a href="{% url 'patient_register' %}" class="btn btn-primary">Register as Patient</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">For Doctors</h5>
+                        <p class="card-text">Register as a doctor to manage your practice and connect with patients.</p>
+                        <a href="{% url 'doctor_register_step1' %}" class="btn btn-success">Register as Doctor</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
