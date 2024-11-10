@@ -154,10 +154,20 @@ def doctor_register_step5(request):
         form = DoctorRegistrationForm5()
     return render(request, 'user_auth/doctor_register_step5.html', {'form': form})
 
+# @login_required
+# def dashboard(request):
+#     if hasattr(request.user, 'patientprofile'):
+#         return render(request, 'user_auth/patient_dashboard.html')
+#     elif hasattr(request.user, 'doctorprofile'):
+#         return render(request, 'user_auth/doctor_dashboard.html')
+#     return redirect('home')
+# user_auth/views.py
+
 @login_required
 def dashboard(request):
     if hasattr(request.user, 'patientprofile'):
         return render(request, 'user_auth/patient_dashboard.html')
     elif hasattr(request.user, 'doctorprofile'):
-        return render(request, 'user_auth/doctor_dashboard.html')
+        doctor_profile = request.user.doctorprofile
+        return render(request, 'user_auth/doctor_dashboard.html', {'doctor_profile': doctor_profile})
     return redirect('home')

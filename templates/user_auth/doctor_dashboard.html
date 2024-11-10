@@ -1,23 +1,29 @@
-
 {% extends 'user_auth/base.html' %}
 
 {% block content %}
 <div class="card">
     <div class="card-body">
-        <h2 class="card-title">Welcome, Dr. {{ user.doctorprofile.full_name }}</h2>
-        {% if not user.doctorprofile.is_verified %}
+        <h2 class="card-title">Welcome, Dr. {{ doctor_profile.full_name }}</h2>
+        
+        {% if not doctor_profile.is_verified %}
             <div class="alert alert-warning">
                 Your verification is under process. Some features will be limited until verification is complete.
             </div>
         {% endif %}
+
         <div class="row mt-4">
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <h3>Profile Information</h3>
-                        <p><strong>PMDC No:</strong> {{ user.doctorprofile.pmdc_no }}</p>
-                        <p><strong>Phone:</strong> {{ user.doctorprofile.phone_no }}</p>
-                        <p><strong>Email:</strong> {{ user.email }}</p>
+                        {% if doctor_profile.profile_picture %}
+                            <img src="{{ doctor_profile.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
+                        {% else %}
+                            <p>No profile picture uploaded.</p>
+                        {% endif %}
+                        <p><strong>PMDC No:</strong> {{ doctor_profile.pmdc_no }}</p>
+                        <p><strong>Phone:</strong> {{ doctor_profile.phone_no }}</p>
+                        <p><strong>Email:</strong> {{ request.user.email }}</p>
                     </div>
                 </div>
             </div>

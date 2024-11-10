@@ -22,8 +22,18 @@ class DoctorRegistrationForm1(UserCreationForm):
         fields = ('username', 'email', 'password1', 'password2')
 
 class DoctorRegistrationForm2(forms.Form):
-    specializations = forms.CharField(widget=forms.Textarea, help_text="Enter specializations, one per line")
-    
+    specializations = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control',  # Bootstrap class for styling
+                'placeholder': 'Enter each specialization on a new line',  # User-friendly placeholder text
+                'rows': 5,  # Sets the height of the textarea
+                'style': 'resize: vertical;',  # Allows vertical resizing only
+            }
+        ),
+        help_text="Enter each specialization on a new line.",
+        label="Specializations",  # Descriptive label
+    )  
     # Dynamic form fields for qualifications and experiences will be handled in the view
 
 class DoctorRegistrationForm3(forms.ModelForm):

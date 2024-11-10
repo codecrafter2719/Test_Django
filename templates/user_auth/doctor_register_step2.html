@@ -11,7 +11,11 @@
                 </div>
                 <form method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    <div class="mb-3">
+                        {{ form.specializations.label_tag }}
+                        {{ form.specializations }}
+                        <small class="form-text text-muted">{{ form.specializations.help_text }}</small>
+                    </div>
                     <button type="submit" class="btn btn-primary w-100">Next Step</button>
                 </form>
             </div>
