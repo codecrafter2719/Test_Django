@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import PatientProfile, DoctorProfile, Specialization, Qualification, Experience, PracticeDetail, OnlineClinic
+from .services import verify_pmdc_number
 
 class PatientRegistrationForm(UserCreationForm):
     phone_no = forms.CharField(max_length=15)
@@ -11,15 +12,37 @@ class PatientRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
+# user_auth/forms.py
+
 
 class DoctorRegistrationForm1(UserCreationForm):
     phone_no = forms.CharField(max_length=15)
     full_name = forms.CharField(max_length=100)
     pmdc_no = forms.CharField(max_length=50)
-    
+
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
+
+    def clean_pmdc_no(self):
+        pmdc_no = self.cleaned_data.get('pmdc_no')
+        verification_result = verify_pmdc_number(pmdc_no)
+
+        if not verification_result['status']:
+            raise forms.ValidationError(verification_result.get('message', 'Invalid PMDC number'))
+
+        # Store the verification details in the form instance
+        self.cleaned_data['verified_doctor'] = verification_result['doctor']
+        return pmdc_no
+
+# class DoctorRegistrationForm1(UserCreationForm):
+#     phone_no = forms.CharField(max_length=15)
+#     full_name = forms.CharField(max_length=100)
+#     pmdc_no = forms.CharField(max_length=50)
+    
+#     class Meta:
+#         model = User
+#         fields = ('username', 'email', 'password1', 'password2')
 
 class DoctorRegistrationForm2(forms.Form):
     specializations = forms.CharField(

@@ -11,18 +11,34 @@ class PatientProfile(models.Model):
     
     def __str__(self):
         return self.user.username
+# user_auth/models.py
 
 class DoctorProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_no = models.CharField(max_length=15)
     full_name = models.CharField(max_length=100)
     pmdc_no = models.CharField(max_length=50, unique=True)
-    is_verified = models.BooleanField(default=False)
-    registration_step = models.IntegerField(default=1)
+    is_verified = models.BooleanField(default=False)  # Verified via PMDC API
+    is_approved = models.BooleanField(default=False)  # Approved by admin
     profile_picture = models.ImageField(upload_to='doctor_profiles/', null=True, blank=True)
+    registration_step = models.IntegerField(default=1)  # Track registration progress
+
     
     def __str__(self):
         return self.user.username
+
+
+# class DoctorProfile(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     phone_no = models.CharField(max_length=15)
+#     full_name = models.CharField(max_length=100)
+#     pmdc_no = models.CharField(max_length=50, unique=True)
+#     is_verified = models.BooleanField(default=False)
+#     registration_step = models.IntegerField(default=1)
+#     profile_picture = models.ImageField(upload_to='doctor_profiles/', null=True, blank=True)
+    
+#     def __str__(self):
+#         return self.user.username
 
 class Specialization(models.Model):
     doctor = models.ForeignKey(DoctorProfile, on_delete=models.CASCADE)

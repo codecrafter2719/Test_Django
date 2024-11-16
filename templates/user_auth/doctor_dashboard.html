@@ -4,13 +4,13 @@
 <div class="card">
     <div class="card-body">
         <h2 class="card-title">Welcome, Dr. {{ doctor_profile.full_name }}</h2>
-        
-        {% if not doctor_profile.is_verified %}
-            <div class="alert alert-warning">
-                Your verification is under process. Some features will be limited until verification is complete.
-            </div>
-        {% endif %}
 
+        {% if restricted %}
+        <div class="alert alert-warning text-center">
+            <h4>Your profile is under verification.</h4>
+            <p class="mb-0">You cannot perform any actions until your profile is approved by the admin.</p>
+        </div>
+        {% else %}
         <div class="row mt-4">
             <div class="col-md-4">
                 <div class="card">
@@ -36,6 +36,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
