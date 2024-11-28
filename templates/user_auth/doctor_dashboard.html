@@ -1,42 +1,52 @@
-{% extends 'user_auth/base.html' %}
-
-{% block content %}
-<div class="card">
+{% extends 'user_auth/base.html' %} {% block content %}
+<div class="container mt-4">
+  <div class="card">
     <div class="card-body">
-        <h2 class="card-title">Welcome, Dr. {{ doctor_profile.full_name }}</h2>
+      <h2 class="card-title">Welcome, Dr. {{ doctor_profile.full_name }}</h2>
 
-        {% if restricted %}
-        <div class="alert alert-warning text-center">
-            <h4>Your profile is under verification.</h4>
-            <p class="mb-0">You cannot perform any actions until your profile is approved by the admin.</p>
-        </div>
-        {% else %}
-        <div class="row mt-4">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Profile Information</h3>
-                        {% if doctor_profile.profile_picture %}
-                            <img src="{{ doctor_profile.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
-                        {% else %}
-                            <p>No profile picture uploaded.</p>
-                        {% endif %}
-                        <p><strong>PMDC No:</strong> {{ doctor_profile.pmdc_no }}</p>
-                        <p><strong>Phone:</strong> {{ doctor_profile.phone_no }}</p>
-                        <p><strong>Email:</strong> {{ request.user.email }}</p>
-                    </div>
-                </div>
+      {% if restricted %}
+      <!-- Restricted Dashboard -->
+      <div class="alert alert-warning text-center">
+        <h4>Your profile is under verification.</h4>
+        <p class="mb-0">
+          You cannot perform any actions until your profile is approved by the
+          admin.
+        </p>
+      </div>
+      {% else %}
+      <!-- Full Dashboard -->
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h3>Profile Information</h3>
+              {% if doctor_profile.profile_picture %}
+              <img
+                src="{{ doctor_profile.profile_picture.url }}"
+                alt="Profile Picture"
+                class="img-fluid rounded-circle mb-3"
+                style="width: 150px; height: 150px"
+              />
+              {% else %}
+              <p>No profile picture uploaded.</p>
+              {% endif %}
+              <p><strong>PMDC No:</strong> {{ doctor_profile.pmdc_no }}</p>
+              <p><strong>Phone:</strong> {{ doctor_profile.phone_no }}</p>
+              <p><strong>Email:</strong> {{ request.user.email }}</p>
             </div>
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Upcoming Appointments</h3>
-                        <!-- Add appointment schedule here -->
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-        {% endif %}
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-body">
+              <h3>Upcoming Appointments</h3>
+              <!-- Add appointment schedule here -->
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
     </div>
+  </div>
 </div>
 {% endblock %}

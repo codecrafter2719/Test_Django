@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from django.contrib.auth import views as auth_views
 from user_auth import views
 from django.conf import settings
@@ -7,7 +7,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
+    path('',include('guest_access.urls')),
+
+    # path('', views.home, name='home'),
     path('login/', auth_views.LoginView.as_view(template_name='user_auth/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('patient/register/', views.patient_register, name='patient_register'),

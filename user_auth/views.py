@@ -21,15 +21,21 @@ from .services import verify_pmdc_number
 def doctor_dashboard(request):
     doctor_profile = request.user.doctorprofile
 
+    # Restrict access for unapproved doctors
     if not doctor_profile.is_approved:
-        # Show restricted message for unapproved doctors
-        return render(request, 'user_auth/doctor_dashboard.html', {'doctor_profile': doctor_profile, 'restricted': True})
+        return render(request, 'user_auth/doctor_dashboard.html', {
+            'doctor_profile': doctor_profile,
+            'restricted': True,  # Pass a flag to indicate restricted access
+        })
 
-    # Full dashboard for approved doctors
-    return render(request, 'user_auth/doctor_dashboard.html', {'doctor_profile': doctor_profile, 'restricted': False})
+    # Render full dashboard for approved doctors
+    return render(request, 'user_auth/doctor_dashboard.html', {
+        'doctor_profile': doctor_profile,
+        'restricted': False,  # Pass a flag to indicate full access
+    })
 
-def home(request):
-    return render(request, 'user_auth/home.html')
+# def home(request):
+#     return render(request, 'user_auth/home.html')
 
 def patient_register(request):
     if request.method == 'POST':
