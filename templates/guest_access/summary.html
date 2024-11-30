@@ -1,0 +1,86 @@
+<!-- Place this file at: diseases_app/templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disease Summary</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <style>
+      /* Common styles */
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      main {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <a
+              href="{% url 'guest_access:view_symptoms' %}"
+              class="flex items-center"
+            >
+              <span class="text-xl font-bold text-gray-800"
+                >Disease Manager</span
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="py-6">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold">Selected Diseases</h2>
+          <a
+            href="{% url 'guest_access:view_symptoms' %}"
+            class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200"
+          >
+            Back to Home
+          </a>
+        </div>
+
+        {% if selected_diseases %}
+        <div class="space-y-6">
+          {% for disease in selected_diseases %}
+          <div class="border-b pb-4 last:border-b-0">
+            <h3 class="text-xl font-semibold mb-2">{{ disease.name }}</h3>
+            <p class="text-gray-700">{{ disease.description }}</p>
+            <div class="mt-2 text-sm text-gray-500">
+              Last updated: {{ disease.updated_at|date:"F j, Y" }}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-gray-500">No diseases selected.</p>
+        {% endif %}
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white shadow-lg mt-auto">
+      <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+        <p class="text-center text-gray-600">
+          © 2024 Disease Management System. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+  </body>
+</html>

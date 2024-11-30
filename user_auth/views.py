@@ -34,8 +34,8 @@ def doctor_dashboard(request):
         'restricted': False,  # Pass a flag to indicate full access
     })
 
-# def home(request):
-#     return render(request, 'user_auth/home.html')
+def home(request):
+    return render(request, 'user_auth/home.html')
 
 def patient_register(request):
     if request.method == 'POST':
